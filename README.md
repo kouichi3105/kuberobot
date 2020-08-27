@@ -1,7 +1,7 @@
 # kuberobot
 kubernetes robot operation program (for hobby and study)
 
-
+![kuberobot2 (1)](https://user-images.githubusercontent.com/39552715/91419155-0c71b500-e88e-11ea-95b0-639edf83991c.gif)
 
 ## 1. Equipment
 ・Piccorobo IoT
