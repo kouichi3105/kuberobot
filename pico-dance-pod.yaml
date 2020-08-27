@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pico-dance-pod
+spec:
+  containers:
+  - name: pico-container
+    image: kouichi3105/pico-dance:latest
+    command: ["python", "pico-dance.py"]
+    lifecycle:
+      preStop:
+        exec:
+          command: ["/bin/sh" , "-c" , "curl -v http://192.168.10.14/f4/"]

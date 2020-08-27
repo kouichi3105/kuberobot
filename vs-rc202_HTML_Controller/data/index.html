@@ -1,0 +1,154 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+<title>Picco Controller</title>
+<style>
+.container {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 100px 100px 100px 50px, 50px, 50px;
+}
+
+button {
+  font-size:18px;
+  text-align: center;
+  line-height: 100px;
+}
+
+div {
+  font-size:18px;
+}
+
+.func {
+  background: #f0e68c;
+  border-color: #daa520#fa0;
+}
+
+.ten {
+  background-color: #add8e6;
+  border-color: #4682b4;
+}
+
+.stop {
+  background: #ffb6c1;
+  border-color: #db7093;
+}
+
+.label {
+  grid-column: 1 / 2;
+  background: #66cdaa;
+  border-color: #2f4f4f;
+  text-align: center;
+  line-height: 46px;
+}
+
+.value {
+  grid-column: 2 / 4;
+  background: #66cdaa;
+  border-color: #2f4f4f;
+  text-align: center;
+  line-height: 46px;
+}
+
+body {
+  padding: 10px;
+  font-family: sans-serif;
+}
+</style>
+</head>
+
+<body>
+<script>
+function sendGo(){
+  send("/go/");
+}
+
+function sendLeft(){
+  send("/left/");
+}
+
+function sendRight(){
+  send("/right/");
+}
+
+function sendBack(){
+  send("/back/");
+}
+
+function sendStop(){
+  send("/stop/");
+}
+
+function sendF1(){
+  send("/f1/");
+}
+
+function sendF2(){
+  send("/f2/");
+}
+
+function sendF3(){
+  send("/f3/");
+}
+
+function sendF4(){
+  send("/f4/");
+}
+
+function sendSens(){
+  send("/sens/");
+}
+
+var xhr = new XMLHttpRequest();
+
+xhr.onreadystatechange = function() {
+
+  if(xhr.readyState == 4){
+    if( xhr.status == 200 || xhr.status == 304 ) {
+      var res = xhr.responseText;
+      var data = res.split(",");
+
+      var i;
+      for(i=0;i<5;i++){
+      	if(data[i] >= -9999 && data[i] <= 9999){
+	        var sens_value = document.getElementById("sens"+(i+1));
+	        sens_value.innerHTML = data[i];
+	    }
+      }
+    }
+  }
+};
+
+function send(url){
+  xhr.open("GET", url, true);
+  xhr.send();
+}
+
+window.onload = function(){
+   timer1 = setInterval('sendSens()',1000);
+}
+
+</script>
+
+<div class="container">
+    <button class="func"  onClick=sendF1()>L-L</button>
+    <button class="ten" onClick=sendGo()>GO</button>
+    <button class="func" onClick=sendF2()>L-R</button>
+    <button class="ten" onClick=sendLeft()>LEFT</button>
+    <button class="stop" onClick=sendStop()>STOP</button>
+    <button class="ten" onClick=sendRight()>RIGHT</button>
+    <button class="func" onClick=sendF3()>LED</button>
+    <button class="ten" onClick=sendBack()>BACK</button>
+    <button class="func" onClick=sendF4()>OFF</button>
+    <div class="label">SENSOR1</div>
+    <div id="sens1" class="value">0</div>
+    <div class="label">SENSOR2</div>
+    <div id="sens2" class="value">0</div>
+    <div class="label">SENSOR3</div>
+    <div id="sens3" class="value">0</div>
+    <div class="label">SONIC</div>
+    <div id="sens4" class="value">0</div>
+    <div class="label">Vin</div>
+    <div id="sens5" class="value">0</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: roverc-pod
+spec:
+  containers:
+  - name: roverc-container
+    image: kouichi3105/roverc:latest
+    command: ["python", "roverc.py"]
+    lifecycle:
+      preStop:
+        exec:
+          command: ["/bin/sh" , "-c" , "curl -v http://192.168.10.12/E/"]
